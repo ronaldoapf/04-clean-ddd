@@ -4,4 +4,8 @@ export interface QuestionCommentsRepository {
   create(questionComment: QuestionComment): Promise<void>
   findById(id: string): Promise<QuestionComment | null>
   delete(questionComment: QuestionComment): Promise<void>
+  findManyByQuestionId(
+    questionId: string,
+    options: { page: number },
+  ): Promise<QuestionComment[]>
 }

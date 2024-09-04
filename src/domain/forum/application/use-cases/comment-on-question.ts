@@ -2,6 +2,7 @@ import { QuestionsRepository } from '../repositories/questions-repository'
 import { QuestionComment } from '../../enterprise/entities/question-comment'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { QuestionCommentsRepository } from '../repositories/question-comments-repository'
+import { Either, right } from '@/core/either'
 
 interface CommentOnQuestionUseCaseRequest {
   authorId: string
@@ -9,9 +10,12 @@ interface CommentOnQuestionUseCaseRequest {
   content: string
 }
 
-interface CommentOnQuestionUseCaseResponse {
-  questionComment: QuestionComment
-}
+type CommentOnQuestionUseCaseResponse = Either<
+  null,
+  {
+    questionComment: QuestionComment
+  }
+>
 
 export class CommentOnQuestionUseCase {
   constructor(
@@ -38,6 +42,6 @@ export class CommentOnQuestionUseCase {
 
     await this.questionCommentsRepository.create(questionComment)
 
-    return { questionComment }
+    return right({ questionComment })
   }
 }
